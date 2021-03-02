@@ -6,6 +6,7 @@
 .pnp.js
 /client
 /vidly
+/yarn.lock
 
 # testing
 /coverage

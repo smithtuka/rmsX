@@ -3,21 +3,19 @@ import Joi from "joi-browser";
 import RequisitionTable from "./requisitionTable"
 import Form from "./common/form";
 import {DateUtil} from '../utils/dateUtil'
-// import Select from './common/select';
+import WebServiceUtils from '../utils/webServiceUtils'
 // import _ from 'lodash'
-import {getRequisition, getProjectModel } from "../services/reqService";
+import {getRequisition, getProjectModel, axiosUser } from "../services/reqService";
 
 
 class RequisitionForm extends Form {
   state = {
     data: {
-      projectId: "",
-      stageId:"",
       requester: "",
       amount: "",
       approvalStatus:[]
     },
-    projects : [], //[{"id":"1", "name":"KIIRA"}, {"id":"2", "name":"ROBUST"}, {"id":"3", "name":"ROBUST"}, {"id":"4", "name":"ROBUST"}],
+    projects : [],
     stages: [{"id":"1", "name":"FOUNDATION"}, {"id":"2", "name":"SUBSTRUCTURE"},{"id":"3", "name":"ROOFING"}, {"id":"4", "name":"FINISHES"}],
     items:[],
     errors: {},
@@ -52,15 +50,24 @@ class RequisitionForm extends Form {
     const requisitionId = this.props.match.params.id;
     if (requisitionId === "new") return;
 
-    const requisition = getRequisition(this.props.match.params.id);
+    let requisition = getRequisition(requisitionId);
+    console.log(requisitionId);
+    // axios:
+    requisition =  WebServiceUtils.fetchRequisition(requisitionId);
+    // requisition = axiosUser(requisitionId);
+    // requisition =  (requisitionId);
+    console.log(JSON.stringify(requisition));
+    console.log((requisition));
     if (!requisition) return this.props.history.replace("/not-found");
-    this.setState({ data: this.mapToViewModel(requisition) });
+
+    // this.setState({ data: this.mapToViewModel(requisition) });
   }
 
   mapToViewModel(requisition) {
     return {
-        // fix (s) 
-        projectId: requisition.stage.project.name,
+        // fix (s)
+        
+        projects: requisition.stage.project.name,
         stageId: requisition.stage.name,
         requester: requisition.requester.firstName,
         amount: `{(requisition) => this.calculateAmount(requisition)}`,
@@ -68,6 +75,8 @@ class RequisitionForm extends Form {
         items : requisition.items
     };
   }
+
+  
 
   doSubmit = () => {
     // saveRequisition(this.state.data);
@@ -79,7 +88,7 @@ class RequisitionForm extends Form {
   }
 
   render() {
-    const {stages, projects} = this.state;
+    const {items, stages, projects} = this.state;
     return (
         
       <div>
@@ -101,7 +110,7 @@ class RequisitionForm extends Form {
   </div>
 </div>
         <hr/>
-        <RequisitionTable onChangeAmount={this.changeAmount}/>
+        <RequisitionTable onChangeAmount={this.changeAmount} requsitionItems={items}/>
       </div>
     );
   }

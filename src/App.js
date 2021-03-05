@@ -5,6 +5,7 @@ import NavBar from './components/navbar';
 import Requisitions from './components/requisitions';
 import Project from './components/project';
 import About from './components/about';
+import NotFound from './components/notFound';
 import RequisitionForm from './components/requisitionForm';
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Route path="/requisitions" component={Requisitions} key={"requisitions"}/>
       <Route path="/projects" component={Project} key={"project"}/>
       <Route path="/about" component={About} key={"about"}/>
+      <Route path="/not-found" component={NotFound} key={"not-found"}/>
       <Redirect  from="/" exact to="/home"/>
     </Switch>
     </main>

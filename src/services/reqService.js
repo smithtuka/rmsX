@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import axios from 'axios';
 const requisitions = [
     {
       "id": 38,
@@ -212,7 +213,9 @@ const requisitions = [
   };
 
 export function getRequisition(id) {
-  return requisitions.find(r => r.id===id);
+  console.log("searching for movie with id: "+ id);
+ return _.filter(requisitions, ['id'===id]);
+  // return requisitions.find(r => r.id===id);
 }
 
 export function saveRequisition(id) {
@@ -239,3 +242,14 @@ export function getStageModel(){
   console.log(stages)
   return _.map(stages, stage => _.pick(stage, ['id', 'name']));
 }
+
+// AXIOS WebServiceUtils
+  const findRequisitionByAxios =  async (id) => {
+  const requisition = await axios.get(`http://localhost:3001/v1/requisitions/${id}`);
+  return requisition;
+}
+
+export function axiosUser(id){
+return findRequisitionByAxios(id);
+}
+

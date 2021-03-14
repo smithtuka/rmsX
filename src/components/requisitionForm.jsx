@@ -300,25 +300,25 @@ class RequisitionForm extends Form {
                     stage={stages}
                     id={id}
                 />
-                <h3>Amount: {_.sum(items.map((i) => i.quantity * i.price))}</h3>
-                <h3>
+                <h6>Amount: {_.sum(items.map((i) => i.quantity * i.price))}</h6>
+                <h6>
                     Project:
                     {this.state.data.project === undefined
                         ? this.state.stages[0].id
                         : this.state.data.project}
-                </h3>
-                <h3>
+                </h6>
+                <h6>
                     Stage:
                     {this.state.data.stage === undefined
                         ? this.state.stages[0].id
                         : this.state.data.stage}
-                </h3>
-                <h3>
+                </h6>
+                <h6>
                     Date:
                     {this.state.data.date === undefined
                         ? new Date().toDateString()
                         : this.state.data.date.toDateString()}
-                </h3>
+                </h6>
             </div>
         );
     }

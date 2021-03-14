@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 class Project extends Component {
-    state = {  }
-    render() { 
-        return ( <h2>Project</h2> );
+    state = {};
+    render() {
+        return (
+            <div>
+                <h2>//Admin Actions</h2>
+                <span>approve [Reject, Approve requisitions] </span>
+                <span>Manage [CRUD] Projects and Projects</span>
+            </div>
+        );
     }
 }
- 
+
 export default Project;

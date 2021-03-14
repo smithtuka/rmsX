@@ -4,7 +4,19 @@ import LoginForm from './loginForm';
 class RMS extends Component {
     state = {};
     render() {
-        return <h2>rmsX</h2>;
+        return (
+            <div>
+                <h2>//RmsX</h2>
+                <hr />
+                <p> a good accordians showing a Summary of content</p>
+                <p> DASHBOARDS // graphs EVENTUALLY</p>
+                <span>
+                    {' '}
+                    may have Projects {'=>'} Stages {'=>'} Requisitions{' '}
+                </span>
+                <br></br>
+            </div>
+        );
     }
 }
 

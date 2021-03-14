@@ -6,7 +6,7 @@ const Footer = () => {
         >
             {/* <h5 className="card-header">GCW - Building for the generations!</h5> */}
             <div className="card-body">
-                <h5 className="card-title"></h5>
+                {/* <h5 className="card-title"></h5> */}
                 <p className="card-text">
                     Except the LORD build the house, they labour in vain that
                     build it: except the LORD keep the city, the watchman waketh

@@ -68,7 +68,8 @@ class RequisitionForm extends Form {
 
         let requisition = await (await this.pullItems(requisitionId)).data;
         const items = [...requisition.items];
-        console.log('items', items);
+        console.log('items for project ', requisitionId, ' are : ', items);
+        // populate form to enable editting here!
         // projects = [requisition.data.stage.project];
         // stages = [requisition.data.stage];
 

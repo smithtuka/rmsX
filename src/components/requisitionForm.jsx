@@ -51,7 +51,7 @@ class RequisitionForm extends Form {
 
     pullItems = async (id) => {
         // even project and stage if need be
-        const url = `http://rms-a.herokuapp.com/v1/requisitions/${id}`;
+        const url = `https://rms-a.herokuapp.com/v1/requisitions/${id}`;
         const result = await axios.get(url);
         console.log('AXIOS - FETCHED REQUISITIONS: ', result.data);
         return result;
@@ -101,7 +101,7 @@ class RequisitionForm extends Form {
     doSubmit = () => {
         // saveRequisition(this.state.data);
         // even project and stage if need be
-        const url = `http://rms-a.herokuapp.com/v1/requisitions`;
+        const url = `https://rms-a.herokuapp.com/v1/requisitions`;
         const data = this.state.data;
         alert('doSubmit', data.stage);
         const result = 0; //= await axios.post(url,         );
@@ -176,18 +176,16 @@ class RequisitionForm extends Form {
             Authorization: 'JWT fefege...'
         };
 
-        await axios
-            .post('http://rms-a.herokuapp.com/v1/requisitions', postData)
-            .then(
-                (response) => {
-                    console.log(response);
-                    alert(response.statusText);
-                },
-                (error) => {
-                    console.log(error);
-                    alert(error);
-                }
-            );
+        await axios.post('localhost:8080/v1/requisitions', postData).then(
+            (response) => {
+                console.log(response);
+                alert(response.statusText);
+            },
+            (error) => {
+                console.log(error);
+                alert(error);
+            }
+        );
     };
 
     changeAmount = (amount) => {

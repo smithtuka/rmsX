@@ -12,7 +12,7 @@ class Requisitions extends Component {
 
     pullRequisitions = async function () {
         const url = process.env.REACT_APP_PUBLIC_URL; // see how to use
-        return axios.get('http://rms-a.herokuapp.com/v1/requisitions');
+        return axios.get('https://rms-a.herokuapp.com/v1/requisitions');
     };
 
     async componentDidMount() {

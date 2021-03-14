@@ -169,6 +169,12 @@ class RequisitionForm extends Form {
 
         // submit by axios
         //await
+        // handle cors for deployed instance
+
+        const headers = {
+            'Content-Type': 'application/json',
+            Authorization: 'JWT fefege...'
+        };
 
         await axios
             .post('http://rms-a.herokuapp.com/v1/requisitions', postData)

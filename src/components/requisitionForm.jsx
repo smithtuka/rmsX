@@ -176,16 +176,18 @@ class RequisitionForm extends Form {
             Authorization: 'JWT fefege...'
         };
 
-        await axios.post('localhost:8080/v1/requisitions', postData).then(
-            (response) => {
-                console.log(response);
-                alert(response.statusText);
-            },
-            (error) => {
-                console.log(error);
-                alert(error);
-            }
-        );
+        await axios
+            .post('https://rms-a.herokuapp.com/v1/requisitions', postData)
+            .then(
+                (response) => {
+                    console.log(response);
+                    alert(response.statusText);
+                },
+                (error) => {
+                    console.log(error);
+                    alert(error);
+                }
+            );
     };
 
     changeAmount = (amount) => {

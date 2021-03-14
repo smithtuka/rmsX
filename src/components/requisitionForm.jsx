@@ -137,7 +137,7 @@ class RequisitionForm extends Form {
             this.state.data.stage == undefined
         ) {
             alert(
-                'Ooops, empty requisition! please check verify data and try again!'
+                'Ooops, confirm you requisition! please check, verify your data and submit again!'
             );
             return;
         }
@@ -181,11 +181,11 @@ class RequisitionForm extends Form {
             .then(
                 (response) => {
                     console.log(response);
-                    alert(response.statusText);
+                    alert('Successfully submitted!! ', response.status);
                 },
                 (error) => {
                     console.log(error);
-                    alert(error);
+                    alert('sorry, you may please submit again! ', error);
                 }
             );
     };

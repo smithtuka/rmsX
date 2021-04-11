@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Table from './common/table';
-// import _ from "lodash";
+import ReqTable from './reqTable';
 
 class RequisitionsTable extends Component {
     // id, project, stage, amount, date, requester, Status, Actions[Edit, Approve, Reject, Delete]
@@ -81,9 +80,12 @@ class RequisitionsTable extends Component {
             content: (requisition) => (
                 <button
                     onClick={() => this.props.onApprove(requisition)}
-                    className="btn btn-success btn-sm"
+                    className= { requisition.approvalStatus =='AUTHORIZED'? "btn btn-success btn-sm": "btn btn-warning btn-sm"}
+                    style={{visibility: requisition.approvalStatus !='APPROVED' &&
+                    requisition.approvalStatus !='REJECTED'?  'visible' : 'hidden' }}
                 >
-                    Approve
+                    
+                    { requisition.approvalStatus =='AUTHORIZED'? "Approve": "Authorize"}
                 </button>
             )
         },
@@ -92,8 +94,12 @@ class RequisitionsTable extends Component {
             content: (requisition) => (
                 <button
                     onClick={() => this.props.onReject(requisition)}
-                    // requisition.approvalStatus ==="PARTIAL"? "danger":"warning"
-                    className={'btn btn-sm btn-danger'}
+                    // requisition.approvalStatus ==="AUTHORIZED"? "danger":"warning"
+                    className={
+                        'btn btn-sm btn-danger'
+                    }
+                    style={{visibility: requisition.approvalStatus !='APPROVED' &&
+                    requisition.approvalStatus !='REJECTED'?  'visible' : 'hidden' }}
                 >
                     Reject
                 </button>
@@ -105,12 +111,15 @@ class RequisitionsTable extends Component {
         const { requisitions, onSort, sortColumn } = this.props;
 
         return (
-            <Table
+            <React.Fragment>
+            <ReqTable
                 columns={this.columns}
                 data={requisitions}
                 sortColumn={sortColumn}
                 onSort={onSort}
             />
+
+            </React.Fragment>
         );
     }
 }

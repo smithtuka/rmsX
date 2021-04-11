@@ -133,7 +133,7 @@ const requisitions = [
           "requisition": 5
         }
       ],
-      "approvalStatus": "PARTIAL"
+      "approvalStatus": "AUTHORIZED"
     },
     {
       "id": 6,

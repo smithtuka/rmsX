@@ -30,18 +30,18 @@ class Requisitions extends Component {
         deleteRequisition(requisition.id);
     };
 
-    handleReject = (requisition) => {
-        // const requisitions = [...this.state.requisitions];
-        // const index = requisitions.indexOf(requisition);
-        // this.setState({ requisitions });
+    handleReject = async (requisition) => {
+        alert(`Are you sure you want to reject Req:: R00${requisition.id}`);
+        const response = await axios.put(`https://rms-a.herokuapp.com/v1/requisitions/${requisition.id}?approvalStatus=REJECTED`);
+        window.location.reload();
+        alert("Requisition rejection "+" :: " + response.data);
     };
 
-    handleApprove = (requisition) => {
-        const requisitions = [...this.state.requisitions];
-        // const index = requisitions.indexOf(requisition);
-        // requisitions[index] = { ...requisitions[index] };
-        // requisitions[index].liked = !requisitions[index].liked;
-        this.setState({ requisitions });
+    handleApprove = async (requisition) => {
+        const response = await axios.put(`https://rms-a.herokuapp.com/v1/requisitions/${requisition.id}?approvalStatus=APPROVED`);
+        window.location.reload();
+        alert("Requisition approval "+" :: " + response.data);
+        
     };
 
     render() {

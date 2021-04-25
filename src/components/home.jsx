@@ -1,20 +1,17 @@
 import React, { Component } from 'react';
-import LoginForm from './loginForm';
-// import LoginForm from '../../vidly/src/components/loginForm';
+import RegistrationForm from './registerForm';
 
 class RMS extends Component {
     state = {};
     render() {
         return (
             <div>
-                <h2>//RmsX</h2>
+                {/* <RegistrationForm></RegistrationForm> */}
+                
                 <hr />
-                <p> a good accordians showing a Summary of content</p>
+            
                 <p> DASHBOARDS and graphs EVENTUALLY</p>
-                <span>
-                    {' '}
-                    may have Projects {'=>'} Stages {'=>'} Requisitions{' '}
-                </span>
+ 
                 <br></br>
                 
             </div>

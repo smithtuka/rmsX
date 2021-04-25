@@ -1,5 +1,7 @@
 import './App.css';
+import React, { useState } from 'react';
 import { Switch, Redirect, Route } from 'react-router-dom';
+import Login from './components/logIn';
 import RMS from './components/home';
 import NavBar from './components/navbar';
 import Footer from './components/common/footer';
@@ -8,7 +10,21 @@ import Project from './components/project';
 import About from './components/about';
 import NotFound from './components/notFound';
 import RequisitionForm from './components/requisitionForm';
+
+function setToken(userToken) {
+    console.log("token : ", JSON.stringify(userToken));
+    localStorage.setItem('token', JSON.stringify(userToken));
+}
+
+function getToken() {
+}
+
 function App() {
+    const token = getToken();
+
+    if(!token) {
+      return <Login setToken={setToken} />
+    }
     return (
         <main className="main">
             <NavBar />

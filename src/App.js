@@ -17,6 +17,7 @@ function setToken(userToken) {
 }
 
 function getToken() {
+    return localStorage.getItem('token');
 }
 
 function App() {

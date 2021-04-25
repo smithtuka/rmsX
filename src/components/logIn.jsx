@@ -8,11 +8,11 @@ export default function Login({ setToken }) {
 
     // see useEffect
 
-    async function loginUser(credentials) {}
+    async function loginUser(credentials) {
 
 // axios
 
-return  await axios.post('https://rms-a.herokuapp.com/api/public/v1/login', credentials)
+return await axios.post('https://rms-a.herokuapp.com/api/public/v1/login', credentials)
     // return  await axios.post('http://localhost:8080/api/public/v1/login', credentials)
     .then(res => {
     localStorage.setItem("authorization", res.data);

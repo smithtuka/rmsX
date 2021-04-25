@@ -8,24 +8,13 @@ export default function Login({ setToken }) {
 
     // see useEffect
 
-    async function loginUser(credentials) {
-        // return fetch('https://rms-a.herokuapp.com/api/public/v1/login', {
-        //     return fetch('http://localhost:8080/api/public/v1/login', {
-        //   method: 'POST',
-        //   headers: {
-        //     'Content-Type': 'application/json'
-            // 'Origin': 'https://localhost:3001',
-            // 'Access-Control-Request-Method': 'POST',
-            // 'Access-Control-Max-Age' : '600'
-
-        //   },
-        //   body: JSON.stringify(credentials)
-        // })
-        //   .then(data => data )
+    async function loginUser(credentials) {}
 
 // axios
 
-return  await axios.post('http://localhost:8080/api/public/v1/login', credentials).then(res => {
+return  await axios.post('https://rms-a.herokuapp.com/api/public/v1/login', credentials)
+    // return  await axios.post('http://localhost:8080/api/public/v1/login', credentials)
+    .then(res => {
     localStorage.setItem("authorization", res.data);
     return res.data;
   });

@@ -237,6 +237,8 @@ export function getProjectModel(){
   return _.map(requisitions, requisition => _.pick(requisition, ['id', 'name']));
 }
 
+
+
 export function getStageModel(){
   const stages = [];//_.flatMap(requisitions, r => {r, ['stages']}  );
   console.log(stages)
@@ -251,5 +253,9 @@ export function getStageModel(){
 
 export function axiosUser(id){
 return findRequisitionByAxios(id);
+}
+
+const  findProjectDto = ()=>{
+  const results = axios.get('http://localhost:3001/v1/projects/dto')
 }
 

@@ -33,6 +33,14 @@ const navBar = () => {
                             about
                         </Link>
                     </div>
+
+          
+                <Link className="navbar-brand" to="/">
+                    <button type = "button" className="btn btn-link" 
+                    onClick={ () => {localStorage.clear(); window.location.reload() }}>
+        LOGOUT</button>
+                </Link>
+
                 </div>
             </div>
         </nav>

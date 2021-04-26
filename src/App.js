@@ -1,4 +1,5 @@
 import './App.css';
+import './css/login.css';
 import React, { useState } from 'react';
 import { Switch, Redirect, Route } from 'react-router-dom';
 import Login from './components/logIn';
@@ -10,10 +11,12 @@ import Project from './components/project';
 import About from './components/about';
 import NotFound from './components/notFound';
 import RequisitionForm from './components/requisitionForm';
+import './components/interceptor';
+// import { login } from '.css/login';
 
-function setToken(userToken) {
-    console.log("token : ", JSON.stringify(userToken));
-    localStorage.setItem('token', JSON.stringify(userToken));
+ function setToken (userToken) {
+    console.log("token" +  `Bearer ${userToken}`);
+    localStorage.setItem("token", `Bearer ${userToken}`);
 }
 
 function getToken() {
@@ -25,7 +28,7 @@ function App() {
 
     if(!token) {
       return <Login setToken={setToken} />
-    }
+    } else
     return (
         <main className="main">
             <NavBar />
@@ -43,6 +46,7 @@ function App() {
                 />
                 <Route path="/projects" component={Project} key={'project'} />
                 <Route path="/about" component={About} key={'about'} />
+                <Route path="/login" component={Login} key={'login'} />
                 <Route
                     path="/not-found"
                     component={NotFound}

@@ -7,15 +7,15 @@ import { DateUtil } from '../utils/dateUtil';
 import Select from './common/select';
 import WebServiceUtils from '../utils/webServiceUtils';
 import _ from 'lodash';
-import { getRequisition, getProjectModel } from '../services/reqService';
+import { findProjectDto, getProjectModel } from '../services/reqService';
 
 class RequisitionForm extends Form {
     state = {
         data: {},
         errors: {},
         projects: [],
-        stages: [
-            { id: '1', name: 'FOUNDATION' },
+        stages: //[],
+            [ { id: '1', name: 'FOUNDATION' },
             { id: '2', name: 'SUBSTRUCTURE' },
             { id: '3', name: 'ROOFING' },
             { id: '4', name: 'FINISHES' }
@@ -36,18 +36,18 @@ class RequisitionForm extends Form {
         approvalStatus: Joi.string().label('Status')
     };
 
-    handleChange = ({ currentTarget: input }) => {
-        // const errors = { ...this.state.errors };
-        // const errorMessage = this.validateProperty(input);
-        // if (errorMessage) errors[input.name] = errorMessage;
-        // else delete errors[input.name];
+    // handleChange = ({ currentTarget: input }) => {
+    //     // const errors = { ...this.state.errors };
+    //     // const errorMessage = this.validateProperty(input);
+    //     // if (errorMessage) errors[input.name] = errorMessage;
+    //     // else delete errors[input.name];
 
-        const data = { ...this.state.data };
-        const errors = { ...this.state.errors };
-        data[input.name] = input.value;
-        alert.log('DATA IS: ', data, 'data: ');
-        this.setState({ data, errors });
-    };
+    //     const data = { ...this.state.data };
+    //     const errors = { ...this.state.errors };
+    //     data[input.name] = input.value;
+    //     alert.log('DATA IS: ', data, 'data: ');
+    //     this.setState({ data, errors });
+    // };
 
     pullItems = async (id) => {
         // even project and stage if need be
@@ -59,9 +59,8 @@ class RequisitionForm extends Form {
 
     async componentDidMount() {
         //axios calls here
-        let projects = [...getProjectModel()];
-        let stages = [...this.state.stages];
-        this.setState({ projects, stages });
+        let projects = await (await (axios.get('https://rms-a.herokuapp.com/v1/projects/dto'))).data; 
+        this.setState({ projects });
 
         const requisitionId = this.props.match.params.id;
         if (requisitionId === 'new') return;
@@ -70,10 +69,8 @@ class RequisitionForm extends Form {
         const items = [...requisition.items];
         console.log('items for project ', requisitionId, ' are : ', items);
         // populate form to enable editting here!
-        // projects = [requisition.data.stage.project];
-        // stages = [requisition.data.stage];
 
-        this.setState({ id: requisitionId, items, projects, stages });
+        this.setState({ id: requisitionId, items, projects });
         console.log(JSON.stringify(requisition));
         // console.log(requisition);
         if (!requisition) return this.props.history.replace('/not-found');
@@ -89,8 +86,7 @@ class RequisitionForm extends Form {
 
         const stage = data.stage === '' ? this.state.stages[0].id : data.stage;
 
-        const project =
-            data.project === '' ? this.state.projects[0].id : data.project;
+        const project = data.project === '' ? this.state.projects[0].id : data.project;
 
         data.stage = stage;
         data.project = project;
@@ -107,7 +103,7 @@ class RequisitionForm extends Form {
         const result = 0; //= await axios.post(url,         );
         console.log(result.data);
         return result;
-        this.props.history.push('/requisitions');
+        // this.props.history.push('/requisitions');
     };
 
     handleSubmit = async () => {
@@ -137,7 +133,7 @@ class RequisitionForm extends Form {
             this.state.data.stage == undefined
         ) {
             alert(
-                'Ooops, confirm you requisition! please check, verify your data and submit again!'
+                'Ooops, please check, verify and submit again!'
             );
             return;
         }
@@ -210,14 +206,18 @@ class RequisitionForm extends Form {
         const data = { ...this.state.data };
         const errors = { ...this.state.errors };
         data[input.name] = input.value;
-        // console.log('DATA IS for: ', data[input.name], data.project);
+        console.log('DATA IS for: ', data[input.name], data.project);
+        if(input.name==='project' ){
+            const stages = [...this.state.projects[input.value-1].stages ];
+            console.log("stages :: " + JSON.stringify(stages));
+           this.setState({ stages });
+        }
         this.setState({ data, errors });
         // console.log('project Data: ', this.state.data.project);
     };
 
     renderSelect(name, label, options) {
         const { data, errors } = this.state;
-
         return (
             <Select
                 name={name}
@@ -303,15 +303,15 @@ class RequisitionForm extends Form {
                 <h6>Amount: {_.sum(items.map((i) => i.quantity * i.price))}</h6>
                 <h6>
                     Project:
-                    {this.state.data.project === undefined
-                        ? this.state.stages[0].id
-                        : this.state.data.project}
+                    {/* {this.state.data.project === undefined
+                        ? this.state.projects[0].id
+                        : this.state.data.project} */}
                 </h6>
                 <h6>
                     Stage:
-                    {this.state.data.stage === undefined
+                    {/* {this.state.data.stage === undefined
                         ? this.state.stages[0].id
-                        : this.state.data.stage}
+                        : this.state.data.stage} */}
                 </h6>
                 <h6>
                     Date:

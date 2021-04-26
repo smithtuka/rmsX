@@ -15,8 +15,12 @@ export default function Login({ setToken }) {
 return await axios.post('https://rms-a.herokuapp.com/api/public/v1/login', credentials)
     // return  await axios.post('http://localhost:8080/api/public/v1/login', credentials)
     .then(res => {
-    localStorage.setItem("authorization", res.data);
+    // localStorage.setItem("authorization", res.data);
+    localStorage.setItem("token", res.data);
     return res.data;
+  }).catch(err => {
+      alert("log in failed. try again");
+      window.location.reload();
   });
        }
 
@@ -24,17 +28,17 @@ return await axios.post('https://rms-a.herokuapp.com/api/public/v1/login', crede
     //     return 'Basic ' + window.btoa(username + ":" + password)
     // }
 
-
+let token = "";
        const handleSubmit = async e => {
         e.preventDefault();
         console.log("------- submitting -------");
-        const token = await loginUser({
+        token = await loginUser({
           username,
           password
         });
         console.log(token);
         setToken(token);
-        // alert(token);
+       window.location.reload();
       }
 
     return(

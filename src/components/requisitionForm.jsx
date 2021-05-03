@@ -112,7 +112,6 @@ class RequisitionForm extends Form {
 
     handleSubmit = async () => {
         // e.preventDefault();
-
         const data = { ...this.state.data };
         const stage =
             data.stage === undefined ? this.state.stages[0].id : data.stage;
@@ -151,17 +150,8 @@ class RequisitionForm extends Form {
 
         const postData = {
             requiredDate: '2021-02-24T02:42:44.649+00:00',
-            //sessionStorage.getItem('user'),
-            requester: {
-                firstName: 'Smith',
-                lastName: 'TUKA',
-                address: null,
-                id: 1,
-                phone: null,
-                email: 'smithtuka@gmail.com',
-                role: 'ADMIN'
-            },
-            stage: null,
+            requester: JSON.parse(sessionStorage.getItem('user')),
+            stage: JSON.parse(this.state.data.stage),
             items: items,
             approvalStatus: 'RECEIVED'
         };
@@ -172,8 +162,8 @@ class RequisitionForm extends Form {
         };
 
         await axios
-            // .post('https://rms-a.herokuapp.com/v1/requisitions', postData)
-            .post('http://localhost:8080/v1/requisitions', postData)
+            .post('https://rms-a.herokuapp.com/v1/requisitions', postData)
+            // .post('http://localhost:8080/v1/requisitions', postData)
             .then(
                 (response) => {
                     console.log(response);
@@ -181,6 +171,7 @@ class RequisitionForm extends Form {
                 },
                 (error) => {
                     console.log(error);
+                    // window.location.reload();
                     alert('sorry, you may please submit again! ', error);
                 }
             );
@@ -257,7 +248,7 @@ class RequisitionForm extends Form {
     }
 
     render() {
-        const { id, items, stages, projects } = this.state;
+        const { id, items, stages, projects, data } = this.state;
         return (
             <div>
                 <h2>

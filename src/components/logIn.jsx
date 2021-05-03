@@ -11,16 +11,15 @@ export default function Login({ setToken }) {
     async function loginUser(credentials) {
         // axios
 
-        // return await axios
-        //     .post(
-        //         'https://rms-a.herokuapp.com/api/public/v1/login',
-        //         credentials
-        //     )
         return await axios
-            .post('http://localhost:8080/api/public/v1/login', credentials)
+            .post(
+                'https://rms-a.herokuapp.com/api/public/v1/login',
+                credentials
+            )
+            // return await axios
+            //     .post('http://localhost:8080/api/public/v1/login', credentials)
             .then((res) => {
                 sessionStorage.setItem('token', res.data);
-                // fetchUserDetails(credentials);
                 return res.data;
             })
             .catch((err) => {
@@ -32,12 +31,9 @@ export default function Login({ setToken }) {
     useEffect(() => {
         const fetchUser = async () => {
             return await axios
-                // .get(`https://rms-a.herokuapp.com/users/v1/${username}`)
-                .get(`http://localhost:8080/users/v1/${username}`)
+                .get(`https://rms-a.herokuapp.com/users/v1/${username}`)
+                // .get(`http://localhost:8080/users/v1/${username}`)
                 .then((res) => {
-                    // alert(res.data);
-                    // alert('fetching the user details');
-                    // alert(`Successfully!!' + ${JSON.stringify(res.data)}`);
                     setUser(JSON.stringify(res.data));
                     sessionStorage.setItem('user', JSON.stringify(res.data));
                     localStorage.setItem('user', JSON.stringify(res.data));

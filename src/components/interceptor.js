@@ -1,20 +1,20 @@
+var axios = require('axios');
 
-var axios = require("axios");
-
-export const jwtToken = localStorage.getItem("token");
+export const jwtToken = sessionStorage.getItem('token'); // why local?
 
 // request interceptor
 axios.interceptors.request.use(
-  (config)=> {
-    if (jwtToken) {
-      config.headers["Authorization"] = (jwtToken);
-      console.log(jwtToken);
+    (config) => {
+        if (jwtToken) {
+            config.headers['Authorization'] = jwtToken;
+            console.log(jwtToken);
+        }
+        return config;
+    },
+    (err) => {
+        console.log('failed ::', err);
+        alert('Please log in and try again!');
+        sessionStorage.clear();
+        return Promise.reject(err);
     }
-    return config;
-  },
-  (err) => {
-      console.log("failed ::" + err);
-      alert("Please log in and try again!")
-    return Promise.reject(err);
-  }
 );

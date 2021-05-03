@@ -12,8 +12,8 @@ class Requisitions extends Component {
 
     pullRequisitions = async function () {
         const url = process.env.REACT_APP_PUBLIC_URL; // see how to use
-        return axios.get('https://rms-a.herokuapp.com/v1/requisitions');
-        // return axios.get('http://localhost:8080/v1/requisitions');
+        // return axios.get('https://rms-a.herokuapp.com/v1/requisitions');
+        return axios.get('http://localhost:8080/v1/requisitions');
     };
 
     async componentDidMount() {
@@ -33,16 +33,19 @@ class Requisitions extends Component {
 
     handleReject = async (requisition) => {
         alert(`Are you sure you want to reject Req:: R00${requisition.id}`);
-        const response = await axios.put(`https://rms-a.herokuapp.com/v1/requisitions/${requisition.id}?approvalStatus=REJECTED`);
-        window.location.reload(); // hack
-        alert("Requisition rejection "+" :: " + response.data);
+        const response = await axios.put(
+            `https://rms-a.herokuapp.com/v1/requisitions/${requisition.id}?approvalStatus=REJECTED`
+        );
+        window.location.reload(); // hack?
+        alert('Requisition rejection ' + ' :: ' + response.data);
     };
 
     handleApprove = async (requisition) => {
-        const response = await axios.put(`https://rms-a.herokuapp.com/v1/requisitions/${requisition.id}?approvalStatus=APPROVED`);
+        const response = await axios.put(
+            `https://rms-a.herokuapp.com/v1/requisitions/${requisition.id}?approvalStatus=APPROVED`
+        );
         window.location.reload();
-        alert("Requisition approval "+" :: " + response.data);
-        
+        alert('Requisition approval ' + ' :: ' + response.data);
     };
 
     render() {

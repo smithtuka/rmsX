@@ -53,6 +53,7 @@ const navBar = () => {
                             className="btn btn-link "
                             onClick={() => {
                                 sessionStorage.clear();
+                                localStorage.clear();
                                 window.location.reload();
                             }}
                         >

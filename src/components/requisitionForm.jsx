@@ -14,8 +14,9 @@ class RequisitionForm extends Form {
         data: {},
         errors: {},
         projects: [],
-        stages: //[],
-            [ { id: '1', name: 'FOUNDATION' },
+        //[],
+        stages: [
+            { id: '1', name: 'FOUNDATION' },
             { id: '2', name: 'SUBSTRUCTURE' },
             { id: '3', name: 'ROOFING' },
             { id: '4', name: 'FINISHES' }
@@ -59,7 +60,9 @@ class RequisitionForm extends Form {
 
     async componentDidMount() {
         //axios calls here
-        let projects = await (await (axios.get('https://rms-a.herokuapp.com/v1/projects/dto'))).data; 
+        let projects = await (
+            await axios.get('https://rms-a.herokuapp.com/v1/projects/dto')
+        ).data;
         this.setState({ projects });
 
         const requisitionId = this.props.match.params.id;
@@ -86,7 +89,8 @@ class RequisitionForm extends Form {
 
         const stage = data.stage === '' ? this.state.stages[0].id : data.stage;
 
-        const project = data.project === '' ? this.state.projects[0].id : data.project;
+        const project =
+            data.project === '' ? this.state.projects[0].id : data.project;
 
         data.stage = stage;
         data.project = project;
@@ -132,9 +136,7 @@ class RequisitionForm extends Form {
             this.state.data.project == undefined ||
             this.state.data.stage == undefined
         ) {
-            alert(
-                'Ooops, please check, verify and submit again!'
-            );
+            alert('Ooops, please check, verify and submit again!');
             return;
         }
 
@@ -149,6 +151,7 @@ class RequisitionForm extends Form {
 
         const postData = {
             requiredDate: '2021-02-24T02:42:44.649+00:00',
+            //sessionStorage.getItem('user'),
             requester: {
                 firstName: 'Smith',
                 lastName: 'TUKA',
@@ -163,17 +166,14 @@ class RequisitionForm extends Form {
             approvalStatus: 'RECEIVED'
         };
 
-        // submit by axios
-        //await
-        // handle cors for deployed instance
-
         const headers = {
-            'Content-Type': 'application/json',
-            Authorization: 'JWT fefege...'
+            'Content-Type': 'application/json'
+            // Authorization: 'JWT fefege...'
         };
 
         await axios
-            .post('https://rms-a.herokuapp.com/v1/requisitions', postData)
+            // .post('https://rms-a.herokuapp.com/v1/requisitions', postData)
+            .post('http://localhost:8080/v1/requisitions', postData)
             .then(
                 (response) => {
                     console.log(response);
@@ -207,10 +207,10 @@ class RequisitionForm extends Form {
         const errors = { ...this.state.errors };
         data[input.name] = input.value;
         console.log('DATA IS for: ', data[input.name], data.project);
-        if(input.name==='project' ){
-            const stages = [...this.state.projects[input.value-1].stages ];
-            console.log("stages :: " + JSON.stringify(stages));
-           this.setState({ stages });
+        if (input.name === 'project') {
+            const stages = [...this.state.projects[input.value - 1].stages];
+            console.log('stages :: ' + JSON.stringify(stages));
+            this.setState({ stages });
         }
         this.setState({ data, errors });
         // console.log('project Data: ', this.state.data.project);

@@ -5,9 +5,7 @@ import RequisitionTable from './requisitionTable';
 import Form from './common/form';
 import { DateUtil } from '../utils/dateUtil';
 import Select from './common/select';
-import WebServiceUtils from '../utils/webServiceUtils';
 import _ from 'lodash';
-import { findProjectDto, getProjectModel } from '../services/reqService';
 
 class RequisitionForm extends Form {
     state = {
@@ -53,6 +51,7 @@ class RequisitionForm extends Form {
     pullItems = async (id) => {
         // even project and stage if need be
         const url = `https://rms-a.herokuapp.com/v1/requisitions/${id}`;
+        // const url = `http://localhost:8080/v1/requisitions/${id}`;
         const result = await axios.get(url);
         console.log('AXIOS - FETCHED REQUISITIONS: ', result.data);
         return result;
@@ -63,6 +62,7 @@ class RequisitionForm extends Form {
         let projects = await (
             await axios.get('https://rms-a.herokuapp.com/v1/projects/dto')
         ).data;
+        // projects &&
         this.setState({ projects });
 
         const requisitionId = this.props.match.params.id;
@@ -113,12 +113,8 @@ class RequisitionForm extends Form {
     handleSubmit = async () => {
         // e.preventDefault();
         const data = { ...this.state.data };
-        const stage =
-            data.stage === undefined ? this.state.stages[0].id : data.stage;
-        const project =
-            data.project === undefined
-                ? this.state.projects[0].id
-                : data.project;
+        const stage = data.stage === undefined ? 1 : data.stage;
+        const project = data.project === undefined ? 1 : data.project;
 
         data.stage = stage;
         data.project = project;
@@ -145,13 +141,15 @@ class RequisitionForm extends Form {
             'for stage: ',
             this.state.data.stage,
             'and project: ',
-            this.state.data.project
+            this.state.data.project,
+            'and date: ',
+            this.state.data.date
         );
 
         const postData = {
-            requiredDate: '2021-02-24T02:42:44.649+00:00',
+            requiredDate: this.state.data.date,
             requester: JSON.parse(sessionStorage.getItem('user')),
-            stage: JSON.parse(this.state.data.stage),
+            stage: { id: this.state.data.stage },
             items: items,
             approvalStatus: 'RECEIVED'
         };
@@ -166,7 +164,7 @@ class RequisitionForm extends Form {
             // .post('http://localhost:8080/v1/requisitions', postData)
             .then(
                 (response) => {
-                    console.log(response);
+                    console.log(response.data);
                     alert('Successfully submitted!! ', response.status);
                 },
                 (error) => {

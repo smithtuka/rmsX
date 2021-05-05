@@ -7,20 +7,25 @@ import { getRequisitions, deleteRequisition } from '../services/reqService';
 class Requisitions extends Component {
     state = {
         requisitions: [],
+        selectedRequisitions: [],
         stages: []
     };
 
-    pullRequisitions = async function () {
-        const url = process.env.REACT_APP_PUBLIC_URL; // see how to use
-        return axios.get('https://rms-a.herokuapp.com/v1/requisitions');
-        // return axios.get('http://localhost:8080/v1/requisitions');
-    };
-
     async componentDidMount() {
-        const requisitions = [...(await this.pullRequisitions()).data];
-        console.log(requisitions);
-        requisitions && this.setState({ requisitions });
-        // this.setState({ requisitions: getRequisitions() });
+        let requisitions = [];
+
+        await axios
+            .get('https://rms-a.herokuapp.com/v1/requisitions/all')
+            // .get('http://localhost:8080/v1/requisitions/all')
+            .then((res) => {
+                requisitions = [...res.data];
+                console.log(res.data.length);
+                requisitions && this.setState({ requisitions });
+            })
+            .catch((err) => {
+                console.log(err);
+                alert('Server error, please contact Admin');
+            });
     }
 
     handleDelete = (requisition) => {
@@ -32,26 +37,48 @@ class Requisitions extends Component {
     };
 
     handleReject = async (requisition) => {
-        alert(`Are you sure you want to reject Req:: R00${requisition.id}`);
-        const response = await axios.put(
-            `https://rms-a.herokuapp.com/v1/requisitions/${requisition.id}?approvalStatus=REJECTED`
-        );
-        window.location.reload(); // hack?
-        alert('Requisition rejection ' + ' :: ' + response.data);
+        console.log(` rejecting :: R00${requisition.id}`);
+        if (JSON.parse(sessionStorage.getItem('user')).role === 'ADMIN') {
+            const response = await axios.put(
+                `https://rms-a.herokuapp.com/v1/requisitions/${requisition.id}?approvalStatus=REJECTED`
+            );
+            window.location.reload();
+            alert('Requisition rejection ' + ' :: ' + response.data);
+        } else alert('You are not authorized to Approve Requisitions');
     };
 
     handleApprove = async (requisition) => {
-        const response = await axios.put(
-            `https://rms-a.herokuapp.com/v1/requisitions/${requisition.id}?approvalStatus=APPROVED`
-        );
-        window.location.reload();
-        alert('Requisition approval ' + ' :: ' + response.data);
+        console.log(` approving :: R00${requisition.id}`);
+        if (JSON.parse(sessionStorage.getItem('user')).role === 'ADMIN') {
+            const response = await axios.put(
+                `https://rms-a.herokuapp.com/v1/requisitions/${requisition.id}?approvalStatus=APPROVED`
+            );
+            window.location.reload();
+            alert('Requisition approval ' + ' :: ' + response.data);
+        } else alert('You are not authorized to Approve Requisitions');
+    };
+
+    isAdmin = () => {
+        return JSON.parse(sessionStorage.getItem('user')).role === 'ADMIN';
     };
 
     render() {
         return (
             <div className="row">
-                <div className="col-1"></div>
+                <div className="col-2">
+                    <ul className="list-group">
+                        <li
+                            className="list-group-item active"
+                            aria-current="true"
+                        >
+                            All
+                        </li>
+                        <li className="list-group-item">Approved</li>
+                        <li className="list-group-item">Rejected</li>
+                        <li className="list-group-item">Authorized</li>
+                        <li className="list-group-item">New</li>
+                    </ul>
+                </div>
                 <div className="col">
                     <Link
                         to="/requisitions/new"

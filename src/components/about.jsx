@@ -4,9 +4,9 @@ class About extends Component {
     render() {
         return (
             <div>
-                <h2>//Comments</h2>
-                <span>Select a requisition </span>
-                <span>Manage [CRUD] Requisitions and Comments</span>
+                <h3>Help Menu</h3> <hr />
+                <h3>News & Announcements</h3> <hr />
+                <h3>Comments & Recommendations</h3> <hr />
             </div>
         );
     }

@@ -80,12 +80,22 @@ class RequisitionsTable extends Component {
             content: (requisition) => (
                 <button
                     onClick={() => this.props.onApprove(requisition)}
-                    className= { requisition.approvalStatus =='AUTHORIZED'? "btn btn-success btn-sm": "btn btn-warning btn-sm"}
-                    style={{visibility: requisition.approvalStatus !='APPROVED' &&
-                    requisition.approvalStatus !='REJECTED'?  'visible' : 'hidden' }}
+                    className={
+                        requisition.approvalStatus == 'AUTHORIZED'
+                            ? 'btn btn-warning btn-sm'
+                            : 'btn btn-success btn-sm'
+                    }
+                    style={{
+                        visibility:
+                            requisition.approvalStatus != 'APPROVED' &&
+                            requisition.approvalStatus != 'REJECTED'
+                                ? 'visible'
+                                : 'hidden'
+                    }}
                 >
-                    
-                    { requisition.approvalStatus =='AUTHORIZED'? "Approve": "Authorize"}
+                    {requisition.approvalStatus == 'AUTHORIZED'
+                        ? 'Approve'
+                        : 'Authorize'}
                 </button>
             )
         },
@@ -95,11 +105,16 @@ class RequisitionsTable extends Component {
                 <button
                     onClick={() => this.props.onReject(requisition)}
                     // requisition.approvalStatus ==="AUTHORIZED"? "danger":"warning"
-                    className={
-                        'btn btn-sm btn-danger'
-                    }
-                    style={{visibility: requisition.approvalStatus !='APPROVED' &&
-                    requisition.approvalStatus !='REJECTED'?  'visible' : 'hidden' }}
+                    className={'btn btn-sm btn-danger'}
+                    style={{
+                        visibility:
+                            requisition.approvalStatus != 'APPROVED' &&
+                            requisition.approvalStatus != 'REJECTED'
+                                ? // && JSON.parse(sessionStorage.getItem('user')).role ===
+                                  //     'ADMIN'
+                                  'visible'
+                                : 'hidden'
+                    }}
                 >
                     Reject
                 </button>
@@ -112,13 +127,12 @@ class RequisitionsTable extends Component {
 
         return (
             <React.Fragment>
-            <ReqTable
-                columns={this.columns}
-                data={requisitions}
-                sortColumn={sortColumn}
-                onSort={onSort}
-            />
-
+                <ReqTable
+                    columns={this.columns}
+                    data={requisitions}
+                    sortColumn={sortColumn}
+                    onSort={onSort}
+                />
             </React.Fragment>
         );
     }

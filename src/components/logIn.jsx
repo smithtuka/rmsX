@@ -37,7 +37,7 @@ export default function Login({ setToken }) {
                     setUser(JSON.stringify(res.data));
                     sessionStorage.setItem('user', JSON.stringify(res.data));
                     localStorage.setItem('user', JSON.stringify(res.data));
-                    console.log(JSON.stringify(res.data));
+                    // console.log(JSON.stringify(res.data));
                     // window.location.reload();
                     return res.data;
                 })
@@ -52,6 +52,7 @@ export default function Login({ setToken }) {
             setTimeout(() => {
                 window.location.reload();
             }, 1000);
+            console.log(sessionStorage.getItem('user'));
         }
     }, [count]);
 

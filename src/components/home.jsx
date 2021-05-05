@@ -10,7 +10,7 @@ class RMS extends Component {
 
                 <hr />
                 <Link className="navbar-brand" to="/home">
-                    Requisition Management System
+                    <h3>Requisition Management System</h3>
                 </Link>
 
                 <Link
@@ -27,7 +27,12 @@ class RMS extends Component {
                     Help
                 </Link>
 
-                <p> DASHBOARDS / GRAPHS </p>
+                <span>
+                    {' '}
+                    coming up...
+                    <br />
+                    DASHBOARDS / GRAPHS{' '}
+                </span>
 
                 <br></br>
             </div>

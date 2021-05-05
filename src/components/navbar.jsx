@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.css';
-import { useReducer } from 'react';
+// import { useReducer } from 'react';
 import { Link } from 'react-router-dom';
 const navBar = () => {
     return (
@@ -38,27 +38,54 @@ const navBar = () => {
                     <Link
                         className="navbar-brand"
                         to="/"
-                        style={{ marginLeft: '900px', visibility: 'show' }} // not logged, hide this
+                        style={{
+                            marginLeft: '900px',
+                            visibility:
+                                sessionStorage.getItem('user') === null
+                                    ? 'hidden'
+                                    : 'show'
+                        }} // not logged, hide this
                     >
                         <img
-                            title={'logged' && 'user.name'}
+                            title={
+                                null !==
+                                    JSON.parse(
+                                        sessionStorage.getItem('user')
+                                    ) &&
+                                JSON.parse(sessionStorage.getItem('user'))
+                                //     .userName
+                            }
                             src="https://embodiedfacilitator.com/wp-content/uploads/2018/05/human-icon-png-1901.png"
                             alt="logged in as "
                             width="38"
                             height="40"
                             className="d-inline-block align-top"
                         ></img>
-                        <button
-                            type="button"
-                            className="btn btn-link "
-                            onClick={() => {
-                                sessionStorage.clear();
-                                localStorage.clear();
-                                window.location.reload();
-                            }}
-                        >
-                            logout
-                        </button>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    {
+                                        JSON.parse(
+                                            sessionStorage.getItem('user')
+                                        ).userName
+                                    }
+                                </tr>
+                                <tr>
+                                    <button
+                                        display="block"
+                                        type="button"
+                                        className="btn btn-link "
+                                        onClick={() => {
+                                            sessionStorage.clear();
+                                            localStorage.clear();
+                                            window.location.reload();
+                                        }}
+                                    >
+                                        logout
+                                    </button>
+                                </tr>
+                            </tbody>
+                        </table>
                     </Link>
                 </div>
             </div>

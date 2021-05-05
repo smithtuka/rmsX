@@ -1,6 +1,6 @@
 var axios = require('axios');
 
-export const jwtToken = sessionStorage.getItem('token'); // why local?
+export const jwtToken = sessionStorage.getItem('token');
 
 // request interceptor
 axios.interceptors.request.use(

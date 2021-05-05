@@ -4,9 +4,8 @@ class Project extends Component {
     render() {
         return (
             <div>
-                <h2>//Admin Actions</h2>
-                <span>approve [Reject, Approve requisitions] </span>
-                <span>Manage [CRUD] Projects and Projects</span>
+                <span>coming up...</span>
+                <h3>Manage [CRUD] Projects & Stages</h3>
             </div>
         );
     }

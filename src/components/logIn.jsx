@@ -67,8 +67,6 @@ export default function Login({ setToken }) {
         console.log(token);
         setToken(token);
         setCount(1);
-        // window.location.reload();
-        // setCount(1);
     };
 
     return (

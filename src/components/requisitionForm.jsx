@@ -35,19 +35,6 @@ class RequisitionForm extends Form {
         approvalStatus: Joi.string().label('Status')
     };
 
-    // handleChange = ({ currentTarget: input }) => {
-    //     // const errors = { ...this.state.errors };
-    //     // const errorMessage = this.validateProperty(input);
-    //     // if (errorMessage) errors[input.name] = errorMessage;
-    //     // else delete errors[input.name];
-
-    //     const data = { ...this.state.data };
-    //     const errors = { ...this.state.errors };
-    //     data[input.name] = input.value;
-    //     alert.log('DATA IS: ', data, 'data: ');
-    //     this.setState({ data, errors });
-    // };
-
     pullItems = async (id) => {
         // even project and stage if need be
         const url = `https://rms-a.herokuapp.com/v1/requisitions/${id}`;

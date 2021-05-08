@@ -23,8 +23,10 @@ class Requisitions extends Component {
                 requisitions && this.setState({ requisitions });
             })
             .catch((err) => {
+                sessionStorage.clear();
+                // alert('Server error, please contact Admin');
+                window.location.reload();
                 console.log(err);
-                alert('Server error, please contact Admin');
             });
     }
 

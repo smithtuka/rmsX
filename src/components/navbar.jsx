@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.css';
-// import { useReducer } from 'react';
+import Login from './logIn';
 import { Link } from 'react-router-dom';
 const navBar = () => {
     return (
@@ -53,7 +53,7 @@ const navBar = () => {
                                         sessionStorage.getItem('user')
                                     ) &&
                                 JSON.parse(sessionStorage.getItem('user'))
-                                //     .userName
+                                    .userName
                             }
                             src="https://embodiedfacilitator.com/wp-content/uploads/2018/05/human-icon-png-1901.png"
                             alt="logged in as "
@@ -64,11 +64,13 @@ const navBar = () => {
                         <table>
                             <tbody>
                                 <tr>
-                                    {
-                                        JSON.parse(
-                                            sessionStorage.getItem('user')
-                                        ).userName
-                                    }
+                                    {sessionStorage.getItem('user')
+                                        ? JSON.parse(
+                                              sessionStorage.getItem('user')
+                                          ).userName
+                                        : sessionStorage.clear()}
+
+                                    {/* {sessionStorage.getItem('user').userName} */}
                                 </tr>
                                 <tr>
                                     <button

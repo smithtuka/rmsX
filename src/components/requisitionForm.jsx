@@ -37,8 +37,8 @@ class RequisitionForm extends Form {
 
     pullItems = async (id) => {
         // even project and stage if need be
-        const url = `https://rms-a.herokuapp.com/v1/requisitions/${id}`;
-        // const url = `http://localhost:8080/v1/requisitions/${id}`;
+        // const url = `https://rms-a.herokuapp.com/v1/requisitions/${id}`;
+        const url = `http://localhost:8080/v1/requisitions/${id}`;
         const result = await axios.get(url);
         console.log('AXIOS - FETCHED REQUISITIONS: ', result.data);
         return result;

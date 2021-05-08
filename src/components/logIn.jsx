@@ -16,8 +16,7 @@ export default function Login({ setToken }) {
                 'https://rms-a.herokuapp.com/api/public/v1/login',
                 credentials
             )
-            // return await axios
-            //     .post('http://localhost:8080/api/public/v1/login', credentials)
+            // return await axios.post('http://localhost:8080/api/public/v1/login', credentials)
             .then((res) => {
                 sessionStorage.setItem('token', res.data);
                 return res.data;
@@ -34,6 +33,7 @@ export default function Login({ setToken }) {
                 .get(`https://rms-a.herokuapp.com/users/v1/${username}`)
                 // .get(`http://localhost:8080/users/v1/${username}`)
                 .then((res) => {
+                    console.log(res.data);
                     setUser(JSON.stringify(res.data));
                     sessionStorage.setItem('user', JSON.stringify(res.data));
                     localStorage.setItem('user', JSON.stringify(res.data));
@@ -42,9 +42,10 @@ export default function Login({ setToken }) {
                     return res.data;
                 })
                 .catch((err) => {
-                    alert('log in failed. try again');
-                    localStorage.clear();
-                    sessionStorage.clear();
+                    console.log(err);
+                    console.log('log in failed. try again');
+                    // localStorage.clear();
+                    // sessionStorage.clear();
                 });
         };
         if (count != 0) {

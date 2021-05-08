@@ -34,6 +34,7 @@ function App() {
     const token = getToken();
 
     if (!token) {
+        sessionStorage.clear();
         return <Login setToken={setToken} setUser={setUser} />;
     } else
         return (

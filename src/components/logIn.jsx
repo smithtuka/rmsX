@@ -11,11 +11,7 @@ export default function Login({ setToken }) {
     async function loginUser(credentials) {
         // axios
 
-        return await axios
-            .post(
-                'https://rms-a.herokuapp.com/api/public/v1/login',
-                credentials
-            )
+        return await axios.post('https://rms-a.herokuapp.com/api/public/v1/login', credentials )
             // return await axios.post('http://localhost:8080/api/public/v1/login', credentials)
             .then((res) => {
                 sessionStorage.setItem('token', res.data);
@@ -51,6 +47,7 @@ export default function Login({ setToken }) {
         if (count != 0) {
             fetchUser();
             setTimeout(() => {
+                // alert("successfully logged in");
                 window.location.reload();
             }, 1000);
             console.log(sessionStorage.getItem('user'));

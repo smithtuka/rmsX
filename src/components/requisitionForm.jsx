@@ -37,8 +37,8 @@ class RequisitionForm extends Form {
 
     pullItems = async (id) => {
         // even project and stage if need be
-        // const url = `https://rms-a.herokuapp.com/v1/requisitions/${id}`;
-        const url = `http://localhost:8080/v1/requisitions/${id}`;
+        const url = `https://rms-a.herokuapp.com/v1/requisitions/${id}`;
+        // const url = `http://localhost:8080/v1/requisitions/${id}`;
         const result = await axios.get(url);
         console.log('AXIOS - FETCHED REQUISITIONS: ', result.data);
         return result;
@@ -66,7 +66,7 @@ class RequisitionForm extends Form {
         if (!requisition) return this.props.history.replace('/not-found');
     }
 
-    initilaizeRequest = () => {
+    initializeRequest = () => {
         // fix this later -- cd push emty item in 0 position
         const items = [...this.state.items];
         const amount = _.sum(this.state.items.map((i) => i.quantity * i.price));
@@ -115,10 +115,10 @@ class RequisitionForm extends Form {
         if (
             amount <= 0 ||
             isNaN(amount) ||
-            this.state.data.project == undefined ||
-            this.state.data.stage == undefined
+            this.state.data.project === undefined ||
+            this.state.data.stage === undefined
         ) {
-            alert('Ooops, please check, verify and submit again!');
+            alert(`hey ${JSON.parse(sessionStorage.getItem('user')).firstName},  verify items b4 you SUBMIT `);
             return;
         }
 
@@ -153,6 +153,7 @@ class RequisitionForm extends Form {
                 (response) => {
                     console.log(response.data);
                     alert('Successfully submitted!! ', response.status);
+                    window.location.reload();
                 },
                 (error) => {
                     console.log(error);
@@ -276,25 +277,6 @@ class RequisitionForm extends Form {
                     stage={stages}
                     id={id}
                 />
-                <h6>Amount: {_.sum(items.map((i) => i.quantity * i.price))}</h6>
-                <h6>
-                    Project:
-                    {/* {this.state.data.project === undefined
-                        ? this.state.projects[0].id
-                        : this.state.data.project} */}
-                </h6>
-                <h6>
-                    Stage:
-                    {/* {this.state.data.stage === undefined
-                        ? this.state.stages[0].id
-                        : this.state.data.stage} */}
-                </h6>
-                <h6>
-                    Date:
-                    {this.state.data.date === undefined
-                        ? new Date().toDateString()
-                        : this.state.data.date.toDateString()}
-                </h6>
             </div>
         );
     }

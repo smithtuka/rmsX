@@ -31,17 +31,17 @@ class RequisitionsTable extends Component {
                 }`}</Link>
             )
         },
-        {
-            path: 'requisition.project',
-            label: 'Project',
-            content: (requisition) =>
-                `${
-                    null !== requisition.stage &&
-                    null !== requisition.stage.project
-                        ? requisition.stage.project.name
-                        : 'TBD'
-                }`
-        },
+        // {
+        //     path: 'requisition.project',
+        //     label: 'Project',
+        //     content: (requisition) =>
+        //         `${
+        //             null !== requisition.stage &&
+        //             null !== requisition.stage.project
+        //                 ? requisition.stage.project.name
+        //                 : 'TBD'
+        //         }`
+        // },
         {
             path: 'requisition.date',
             label: 'Date',
@@ -57,12 +57,12 @@ class RequisitionsTable extends Component {
             label: 'Requester',
             content: (requisition) => `${requisition.requester.firstName}`
         },
-        {
-            path: 'requisition.stage.name',
-            label: 'Stage',
-            content: (requisition) =>
-                `${null !== requisition.stage ? requisition.stage.name : 'TBD'}`
-        },
+        // {
+        //     path: 'requisition.stage.name',
+        //     label: 'Stage',
+        //     content: (requisition) =>
+        //         `${null !== requisition.stage ? requisition.stage.name : 'TBD'}`
+        // },
         {
             path: 'amount',
             label: 'Amount',

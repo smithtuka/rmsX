@@ -13,12 +13,13 @@ class RequisitionForm extends Form {
         errors: {},
         projects: [],
         //[],
-        stages: [
-            { id: '1', name: 'FOUNDATION' },
-            { id: '2', name: 'SUBSTRUCTURE' },
-            { id: '3', name: 'ROOFING' },
-            { id: '4', name: 'FINISHES' }
-        ],
+        stages: [],
+        //     [
+        //     { id: '1', name: 'FOUNDATION' },
+        //     { id: '2', name: 'SUBSTRUCTURE' },
+        //     { id: '3', name: 'ROOFING' },
+        //     { id: '4', name: 'FINISHES' }
+        // ],
         items: [],
         amount: '0'
     };
@@ -50,6 +51,7 @@ class RequisitionForm extends Form {
             await axios.get('https://rms-a.herokuapp.com/v1/projects/dto')
         ).data;
         // projects &&
+        console.log('Projects :: ', projects);
         this.setState({ projects });
 
         const requisitionId = this.props.match.params.id;
@@ -179,14 +181,22 @@ class RequisitionForm extends Form {
         console.log(data);
     };
 
+    filterStagesByProjectId = (id) => {
+        console.log('project id  :: ', id);
+        const projects = [...this.state.projects];
+        // console.log("all projects  :: ", projects);
+        return _.filter(projects, ['id', JSON.parse(id)]).flatMap(p => p.stages);
+
+    };
+
     handleChange = ({ currentTarget: input }) => {
         const data = { ...this.state.data };
         const errors = { ...this.state.errors };
         data[input.name] = input.value;
         console.log('DATA IS for: ', data[input.name], data.project);
         if (input.name === 'project') {
-            const stages = [...this.state.projects[input.value - 1].stages];
-            console.log('stages :: ' + JSON.stringify(stages));
+            const stages = this.filterStagesByProjectId(input.value);
+            console.log('project id :: ' + input.value + ' stages :: ' + JSON.stringify(stages));
             this.setState({ stages });
         }
         this.setState({ data, errors });
@@ -239,15 +249,15 @@ class RequisitionForm extends Form {
             <div>
                 <h2>
                     Requisition Form
-                    <span className="badge rounded-pill bg-warning m-3">
+                    <span className='badge rounded-pill bg-warning m-3'>
                         UGX {this.state.amount.toLocaleString('en-us')}
                     </span>
                     {this.renderButton('Submit Request')}
                 </h2>
-                <div className="container px-4">
-                    <div className="row gx-5">
-                        <div className="col">
-                            <div className="p-2 border bg-light">
+                <div className='container px-4'>
+                    <div className='row gx-5'>
+                        <div className='col'>
+                            <div className='p-2 border bg-light'>
                                 {this.renderSelect(
                                     'project',
                                     'Project',
@@ -255,13 +265,13 @@ class RequisitionForm extends Form {
                                 )}
                             </div>
                         </div>
-                        <div className="col">
-                            <div className="p-2 border bg-light">
+                        <div className='col'>
+                            <div className='p-2 border bg-light'>
                                 {this.renderSelect('stage', 'Stage', stages)}
                             </div>
                         </div>
-                        <div className="col">
-                            <div className="p-2 border bg-light form-group">
+                        <div className='col'>
+                            <div className='p-2 border bg-light form-group'>
                                 <div>{'Date Required'}</div>
                                 {this.renderDate('date')}
                             </div>

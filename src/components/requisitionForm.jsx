@@ -14,12 +14,6 @@ class RequisitionForm extends Form {
         projects: [],
         //[],
         stages: [],
-        //     [
-        //     { id: '1', name: 'FOUNDATION' },
-        //     { id: '2', name: 'SUBSTRUCTURE' },
-        //     { id: '3', name: 'ROOFING' },
-        //     { id: '4', name: 'FINISHES' }
-        // ],
         items: [],
         amount: '0'
     };
@@ -102,8 +96,10 @@ class RequisitionForm extends Form {
     handleSubmit = async () => {
         // e.preventDefault();
         const data = { ...this.state.data };
-        const stage = data.stage === undefined ? 1 : data.stage;
-        const project = data.project === undefined ? 1 : data.project;
+        console.log('stage id :: ', data.stage);
+        // const stage = data.stage === undefined ? 1 : data.stage; // local
+        const stage = data.stage === undefined ? 6 : data.stage;
+        const project = data.project === undefined ? 7 : data.project;
 
         data.stage = stage;
         data.project = project;
@@ -193,14 +189,18 @@ class RequisitionForm extends Form {
         const data = { ...this.state.data };
         const errors = { ...this.state.errors };
         data[input.name] = input.value;
-        console.log('DATA IS for: ', data[input.name], data.project);
+
         if (input.name === 'project') {
             const stages = this.filterStagesByProjectId(input.value);
             console.log('project id :: ' + input.value + ' stages :: ' + JSON.stringify(stages));
             this.setState({ stages });
+        } else if (input.name === 'stage') {
+            console.log('stage id :: ' + input.value );
+            // this.setState({ data });
         }
         this.setState({ data, errors });
-        // console.log('project Data: ', this.state.data.project);
+        console.log('Project data: ', this.state.data.project);
+        console.log('Stage data: ', this.state.data.stage);
     };
 
     renderSelect(name, label, options) {

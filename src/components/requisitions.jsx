@@ -3,12 +3,15 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import RequisitionsTable from './requisitionsTable';
 import { getRequisitions, deleteRequisition } from '../services/reqService';
+import ListGroup from './common/listGroup';
 
 class Requisitions extends Component {
     state = {
         requisitions: [],
         selectedRequisitions: [],
-        stages: []
+        stages: [],
+        status: [{id:1, name:'RECEIVED'}, {id:2, name:'APPROVED'},{id:3, name:'AUTHORIZED'}, {id:4, name:'REJECTED'}],
+        selectedStatus : {id:1, name:'RECEIVED'}
     };
 
     async componentDidMount() {
@@ -43,6 +46,7 @@ class Requisitions extends Component {
         if (JSON.parse(sessionStorage.getItem('user')).role === 'ADMIN') {
             const response = await axios.put(
                 `https://rms-a.herokuapp.com/v1/requisitions/${requisition.id}?approvalStatus=REJECTED`
+                // `https://localhost:8080/v1/requisitions/${requisition.id}?approvalStatus=REJECTED`
             );
             window.location.reload();
             alert('Requisition rejection ' + ' :: ' + response.data);
@@ -54,9 +58,11 @@ class Requisitions extends Component {
         if (JSON.parse(sessionStorage.getItem('user')).role === 'ADMIN') {
             const response = await axios.put(
                 `https://rms-a.herokuapp.com/v1/requisitions/${requisition.id}?approvalStatus=APPROVED`
-            );
+                // `https://localhost:8080/v1/requisitions/${requisition.id}?approvalStatus=APPROVED`
+            ).then(response => alert('Requisition approval ' + ' :: ' + response.data))
+                .catch(error => console.log(error));
             window.location.reload();
-            alert('Requisition approval ' + ' :: ' + response.data);
+            // alert('Requisition approval ' + ' :: ' + response.data);
         } else alert('You are not authorized to Approve Requisitions');
     };
 
@@ -64,22 +70,21 @@ class Requisitions extends Component {
         return JSON.parse(sessionStorage.getItem('user')).role === 'ADMIN';
     };
 
+    handleStatusSelect = status => {
+        const selectedRequisitions = _.filter([...this.state.requisitions], ['approvalStatus',(status.name)]);
+        // alert(JSON.stringify(selectedRequisitions));
+        this.setState({ selectedStatus: status, selectedRequisitions}); //, searchQuery: "", currentPage: 1 });
+    };
+
     render() {
         return (
             <div className="row">
                 <div className="col-2">
-                    <ul className="list-group">
-                        <li
-                            className="list-group-item active"
-                            aria-current="true"
-                        >
-                            All
-                        </li>
-                        <li className="list-group-item">Approved</li>
-                        <li className="list-group-item">Rejected</li>
-                        <li className="list-group-item">Authorized</li>
-                        <li className="list-group-item">New</li>
-                    </ul>
+                    <ListGroup
+                        items={this.state.status}
+                        selectedItem={this.state.selectedStatus}
+                        onItemSelect={this.handleStatusSelect}
+                    />
                 </div>
                 <div className="col">
                     <Link
@@ -90,11 +95,11 @@ class Requisitions extends Component {
                         Make New Requisition
                     </Link>
                     <p>
-                        Showing {this.state.requisitions.length} requisitions.
+                        Showing {this.state.selectedRequisitions.length} requisitions.
                     </p>
                     {/* <SearchBox value={searchQuery} onChange={this.handleSearch} /> */}
                     <RequisitionsTable
-                        requisitions={this.state.requisitions}
+                        requisitions={this.state.selectedRequisitions}
                         //   sortColumn={sortColumn}
                         onApprove={this.handleApprove}
                         onReject={this.handleReject}

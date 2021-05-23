@@ -17,7 +17,8 @@ const ListGroup = ({
             item === selectedItem ? "list-group-item active" : "list-group-item"
           }
         >
-          {item[textProperty]}
+          {/*{item[textProperty]}*/}
+          {item.name}
         </li>
       ))}
     </ul>
@@ -26,7 +27,7 @@ const ListGroup = ({
 
 ListGroup.defaultProps = {
   textProperty: "name",
-  valueProperty: "_id"
+  valueProperty: "id"
 };
 
 export default ListGroup;

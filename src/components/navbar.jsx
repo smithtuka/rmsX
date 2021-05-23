@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.css';
+import Login from './logIn';
 import { Link } from 'react-router-dom';
 const navBar = () => {
     return (
@@ -12,7 +13,7 @@ const navBar = () => {
                         height="24"
                         className="d-inline-block align-top"
                     />
-                    RMS
+                    {/* RMS */}
                 </Link>
                 <div
                     className="collapse navbar-collapse"
@@ -30,9 +31,64 @@ const navBar = () => {
                             projects
                         </Link>
                         <Link className="nav-link" to="/about">
-                            about
+                            Help
                         </Link>
                     </div>
+
+                    <Link
+                        className="navbar-brand"
+                        to="/"
+                        style={{
+                            marginLeft: '900px',
+                            visibility:
+                                sessionStorage.getItem('user') === null
+                                    ? 'hidden'
+                                    : 'show'
+                        }} // not logged, hide this
+                    >
+                        <img
+                            title={
+                                null !==
+                                    JSON.parse(
+                                        sessionStorage.getItem('user')
+                                    ) &&
+                                JSON.parse(sessionStorage.getItem('user'))
+                                    .userName
+                            }
+                            src="https://embodiedfacilitator.com/wp-content/uploads/2018/05/human-icon-png-1901.png"
+                            alt="logged in as "
+                            width="38"
+                            height="40"
+                            className="d-inline-block align-top"
+                        ></img>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    {sessionStorage.getItem('user')
+                                        ? JSON.parse(
+                                              sessionStorage.getItem('user')
+                                          ).userName
+                                        : sessionStorage.clear()}
+
+                                    {/* {sessionStorage.getItem('user').userName} */}
+                                </tr>
+                                <tr>
+                                    <button
+                                        display="block"
+                                        type="button"
+                                        className="btn btn-link "
+                                        onClick={() => {
+                                            sessionStorage.clear();
+                                            localStorage.clear();
+                                            window.location.reload();
+                                        }}
+                                    >
+                                        logout
+                                    </button>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </Link>
                 </div>
             </div>
         </nav>

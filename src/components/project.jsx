@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 class Project extends Component {
-    state = {  }
-    render() { 
-        return ( <h2>Project</h2> );
+    state = {};
+    render() {
+        return (
+            <div>
+                <span>coming up...</span>
+                <h3>Manage [CRUD] Projects & Stages</h3>
+            </div>
+        );
     }
 }
- 
+
 export default Project;

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Table from './common/table';
-// import _ from "lodash";
+import ReqTable from './reqTable';
 
 class RequisitionsTable extends Component {
     // id, project, stage, amount, date, requester, Status, Actions[Edit, Approve, Reject, Delete]
@@ -32,17 +31,17 @@ class RequisitionsTable extends Component {
                 }`}</Link>
             )
         },
-        {
-            path: 'requisition.project',
-            label: 'Project',
-            content: (requisition) =>
-                `${
-                    null !== requisition.stage &&
-                    null !== requisition.stage.project
-                        ? requisition.stage.project.name
-                        : 'TBD'
-                }`
-        },
+        // {
+        //     path: 'requisition.project',
+        //     label: 'Project',
+        //     content: (requisition) =>
+        //         `${
+        //             null !== requisition.stage &&
+        //             null !== requisition.stage.project
+        //                 ? requisition.stage.project.name
+        //                 : 'TBD'
+        //         }`
+        // },
         {
             path: 'requisition.date',
             label: 'Date',
@@ -58,12 +57,12 @@ class RequisitionsTable extends Component {
             label: 'Requester',
             content: (requisition) => `${requisition.requester.firstName}`
         },
-        {
-            path: 'requisition.stage.name',
-            label: 'Stage',
-            content: (requisition) =>
-                `${null !== requisition.stage ? requisition.stage.name : 'TBD'}`
-        },
+        // {
+        //     path: 'requisition.stage.name',
+        //     label: 'Stage',
+        //     content: (requisition) =>
+        //         `${null !== requisition.stage ? requisition.stage.name : 'TBD'}`
+        // },
         {
             path: 'amount',
             label: 'Amount',
@@ -81,9 +80,22 @@ class RequisitionsTable extends Component {
             content: (requisition) => (
                 <button
                     onClick={() => this.props.onApprove(requisition)}
-                    className="btn btn-success btn-sm"
+                    className={
+                        requisition.approvalStatus == 'AUTHORIZED'
+                            ? 'btn btn-warning btn-sm'
+                            : 'btn btn-success btn-sm'
+                    }
+                    style={{
+                        visibility:
+                            requisition.approvalStatus != 'APPROVED' &&
+                            requisition.approvalStatus != 'REJECTED'
+                                ? 'visible'
+                                : 'hidden'
+                    }}
                 >
-                    Approve
+                    {requisition.approvalStatus == 'AUTHORIZED'
+                        ? 'Approve'
+                        : 'Authorize'}
                 </button>
             )
         },
@@ -92,8 +104,17 @@ class RequisitionsTable extends Component {
             content: (requisition) => (
                 <button
                     onClick={() => this.props.onReject(requisition)}
-                    // requisition.approvalStatus ==="PARTIAL"? "danger":"warning"
+                    // requisition.approvalStatus ==="AUTHORIZED"? "danger":"warning"
                     className={'btn btn-sm btn-danger'}
+                    style={{
+                        visibility:
+                            requisition.approvalStatus != 'APPROVED' &&
+                            requisition.approvalStatus != 'REJECTED'
+                                ? // && JSON.parse(sessionStorage.getItem('user')).role ===
+                                  //     'ADMIN'
+                                  'visible'
+                                : 'hidden'
+                    }}
                 >
                     Reject
                 </button>
@@ -105,12 +126,14 @@ class RequisitionsTable extends Component {
         const { requisitions, onSort, sortColumn } = this.props;
 
         return (
-            <Table
-                columns={this.columns}
-                data={requisitions}
-                sortColumn={sortColumn}
-                onSort={onSort}
-            />
+            <React.Fragment>
+                <ReqTable
+                    columns={this.columns}
+                    data={requisitions}
+                    sortColumn={sortColumn}
+                    onSort={onSort}
+                />
+            </React.Fragment>
         );
     }
 }

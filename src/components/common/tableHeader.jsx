@@ -32,6 +32,10 @@ class TableHeader extends Component {
             <th
               className="clickable"
               key={column.path || column.key}
+              style={{
+                diplay: 'inline-block',
+                width: '200px'
+            }}
               // onClick={() => this.raiseSort(column.path)}
             >
               {column.label}

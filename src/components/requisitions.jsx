@@ -10,7 +10,7 @@ class Requisitions extends Component {
         requisitions: [],
         selectedRequisitions: [],
         stages: [],
-        status: [{id:1, name:'RECEIVED'}, {id:2, name:'APPROVED'},{id:3, name:'AUTHORIZED'}, {id:4, name:'REJECTED'}],
+        status: [{id:1, name:'RECEIVED'}, {id:2, name:'AUTHORIZED'},{id:3, name:'APPROVED'}, {id:4, name:'REJECTED'}],
         selectedStatus : {id:1, name:'RECEIVED'}
     };
 
